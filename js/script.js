@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // табы
+
+
     const tabs = document.querySelectorAll(".tabheader__item"),
         tabsContent = document.querySelectorAll(".tabcontent"),
         tabsParent = document.querySelector(".tabheader__items");
@@ -84,5 +87,36 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+
+    // Timer
+
+
+    const deadline = '2022-09-08';
+
+    function getTimeRemaining(endtime) {
+
+        const t = Date.parse(endtime) - Date.parse(new Date());
+
+        const days = Math.floor(t / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        const minites = Math.floor((t / (1000 * 60)) % 60);
+        const seconds = Math.floor((t / 1000) % 60);
+
+        // чтобы эти переменные за функцию чтобы они работали используем return и все втаскиваем в обьект
+
+        return {
+
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minites': minites,
+            'seconds': seconds
+        }
+    }
+
+    // после пишем фуркцию которая будет устанавливать наш таймер на страницу
+
+
 
 });

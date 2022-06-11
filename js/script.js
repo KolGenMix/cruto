@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const days = Math.floor(t / (1000 * 60 * 60 * 24));
         const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-        const minites = Math.floor((t / (1000 * 60)) % 60);
+        const minutes = Math.floor((t / (1000 * 60)) % 60);
         const seconds = Math.floor((t / 1000) % 60);
 
         // чтобы эти переменные за функцию чтобы они работали используем return и все втаскиваем в обьект
@@ -110,13 +110,61 @@ document.addEventListener('DOMContentLoaded', () => {
             'total': t,
             'days': days,
             'hours': hours,
-            'minites': minites,
+            'minutes': minutes,
             'seconds': seconds
+        };
+    }
+
+    // напишем функцию если число будет меньше 10 то впереди будет подставлятся 0.
+    // И то перенесем в наш updateClock
+
+    function getZero(num) {
+        if (num >= 0 && num < 10) {
+            return `0${num}`;
+        } else {
+            return num;
         }
     }
 
     // после пишем фуркцию которая будет устанавливать наш таймер на страницу
 
+    function setClock(selector, endtime) {
+        const timer = document.querySelector(selector);
+        const days = timer.querySelector('#days');
+        const hours = timer.querySelector('#hours');
+        const minutes = timer.querySelector('#minutes');
+        const seconds = timer.querySelector('#seconds');
+
+        //   переменная чтобы каждую секунду показывало время
+
+        const timeInterval = setInterval(updateClock, 1000);
+
+        updateClock();
 
 
+
+        function updateClock() {
+
+            // мы записали весь обьект где return вначале в переменную t.
+            // То есть переменная  t у нас теперь и есть этот объект
+
+            const t = getTimeRemaining(endtime);
+
+            // теперь используя нашу переменную t на нашу стр помущаем дни часы мин сек
+            days.innerHTML = getZero(t.days);
+            hours.innerHTML = getZero(t.hours);
+            minutes.innerHTML = getZero(t.minutes);
+            seconds.innerHTML = getZero(t.seconds);
+
+            // берем с обьекта t.total
+
+            if (t.total <= 0) {
+                clearInterval(timeInterval);
+            }
+        }
+
+    }
+
+
+    setClock('.timer', deadline);
 });

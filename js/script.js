@@ -167,4 +167,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     setClock('.timer', deadline);
+
+
+    // Модальное окно
+
+    const modalTrigger = document.querySelectorAll('[data-modal]');
+    const modal = document.querySelector('.modal');
+    const modalCloseBtn = document.querySelector('[data-close]');
+
+    modalTrigger.forEach(btn => {
+
+        btn.addEventListener('click', (e) => {
+
+            modal.classList.add('show');
+            modal.classList.remove('hide');
+
+            document.body.style.overflow = 'hidden';
+
+        });
+    });
+
+
+    // если код повторяется то его обертываем в функцию
+
+    function closeModal() {
+
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    // modalCloseBtn.addEventListener('click', () => {
+
+    //     modal.classList.add('hide');
+    //     modal.classList.remove('show');
+
+    //     document.body.style.overflow = "";
+    // });
+
+    // пишем обработчики когда мы кликаем на подложку и мщдальное окно закрывается
+
+    modal.addEventListener('click', (e) => {
+
+        if (e.target === modal) {
+
+            closeModal();
+
+
+            // modal.classList.add('hide');
+            // modal.classList.remove('show');
+
+            // document.body.style.overflow = "";
+
+        }
+
+    });
+
+    // если нажимаешь на Escape закрывается окно
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code === "Escape" && modal.classList.contains('show')) {
+            closeModal();
+        }
+    });
 });

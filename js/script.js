@@ -175,16 +175,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.querySelector('.modal');
     const modalCloseBtn = document.querySelector('[data-close]');
 
+    function openModal() {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId);
+    }
+
     modalTrigger.forEach(btn => {
 
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', openModal);
 
-            modal.classList.add('show');
-            modal.classList.remove('hide');
+        // btn.addEventListener('click', (e) => {
 
-            document.body.style.overflow = 'hidden';
+        //     // modal.classList.add('show');
+        //     // modal.classList.remove('hide');
 
-        });
+        //     // document.body.style.overflow = 'hidden';
+
+        // });
     });
 
 
@@ -232,4 +242,31 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    // чтобы модальное окно выходило через какое то время
+    const modalTimerId = setTimeout(openModal, 3000);
+
+    // если пользователь долистал страницу и 
+    // появляется окно
+
+    // window.addEventListener('scroll', () => {
+    //     if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+    //         openModal();
+    //     }
+
+    // });
+
+    // создадим функцию и поместим верхний функционал showModalByScroll
+
+    function showModalByScroll() {
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModal();
+
+            // здесь еще закрываем обработчик события
+
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+    window.addEventListener('scroll', showModalByScroll);
+
 });
